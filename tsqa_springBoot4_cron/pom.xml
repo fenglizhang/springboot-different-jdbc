@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.zlf</groupId>
+	<artifactId>spring-boot</artifactId>
+	<version>1.0-SNAPSHOT</version>
+<!--  spring boot 父节点依赖,引入这个之后相关的引入就不需要添加version配置， spring boot会自动选择最合适的版本进行添加。 -->
+	<!-- 增加父pom ,spring-boot-starter-parent包含了大量配置好的依赖管理，他是个特殊的starter,它提供了有用的maven默认设置 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.3.RELEASE</version>
+	</parent>
+	<!-- Spring默认使用jdk1.6，如果你想使用jdk1.8，你需要在pom.xml的属性里面添加java.version，如下： -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tomcat.version>7.0.72</tomcat.version>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<!-- Spring通过添加spring-boot-starter-*这样的依赖就能支持具体的某个功能。 -->
+	<!-- 我们这个示例最终是要实现web功能，所以添加的是这个依赖。 -->
+	<dependencies>
+		<dependency>
+			<!-- 指定为Web应用，并启动一个内嵌的Servlet容器（默认是Tomcat）用于处理HTTP请求 -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- 内嵌数据库 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- spring data jpa -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- lombok插件,方便model对象的处理 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<!-- 打包后的jar包名称 -->
+		<finalName>example</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<!-- 必须要的SpringBoot继承的maven插件，缺少了无法打包jar。 -->
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<dependencies>
+					<!-- 在我们开发过程中，我们需要经常修改，为了避免重复启动项目，我们可以启用热部署。 Spring-Loaded项目提供了强大的热部署功能， 
+						添加/删除/修改 方法/字段/接口/枚举 等代码的时候都可以热部署，速度很快，很方便。 想在Spring Boot中使用该功能非常简单 ，就是在spring-boot-maven-plugin插件下面添加依赖： -->
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.5.RELEASE</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>

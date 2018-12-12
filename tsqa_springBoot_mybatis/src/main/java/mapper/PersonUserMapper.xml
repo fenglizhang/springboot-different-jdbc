@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 这里很重要就是前缀 -->
+<mapper namespace="mapper.PersonUserMapper">
+	<!-- 自定义resultMap对象,利于对象的操作 -->
+	<resultMap id="BaseResultMap" type="domain.PersonUserBo">
+		<id column="userID" property="userId" />
+		<result column="pwd" property="pwd" />
+		<result column="userName" property="userName" />
+		<result column="sex" property="sex" />
+		<result column="birth" property="birth" />
+		<result column="education" property="education" />
+		<result column="phone" property="phone" />
+		<result column="status" property="status" />
+		<result column="userLevle" property="userLevle" />
+		<result column="enabled" property="enabled" />
+		<result column="managecom" property="managecom" />
+		<result column="salecom" property="saleCom" />
+		<result column="createTime" property="createTime" />
+		<result column="createPeople" property="createPeople" />
+		<result column="editTime" property="editTime" />
+		<result column="editPeople" property="editPeople" />
+	</resultMap>
+	<sql id="personUserCondition">
+		<where>
+			<if test="userId !=null and userId !='' and userId !='null' ">
+			<![CDATA[and userID=#{userId}]]>
+			</if>
+			<if test="pwd !=null and pwd !='' and pwd !='null' ">
+			<![CDATA[and pwd=#{pwd}]]>
+			</if>
+			<if test="userName !=null and userName !='' and userName !='null' ">
+			<![CDATA[and userName=#{userName}]]>
+			</if>
+			<if test="sex !=null and sex !='' and sex !='null' ">
+			<![CDATA[and sex=#{sex}]]>
+			</if>
+			<if test="education !=null and education !='' and education !='null' ">
+			<![CDATA[and education=#{education}]]>
+			</if>
+			<if test="phone !=null and phone !='' and phone !='null' ">
+			<![CDATA[and phone=#{phone}]]>
+			</if>
+			<if test="status !=null and status !='' and status !='null' ">
+			<![CDATA[and status=#{status}]]>
+			</if>
+			<if test="userLevle !=null and userLevle !='' and userLevle !='null' ">
+			<![CDATA[and userLevle=#{userLevle}]]>
+			</if>
+			<if test="enabled !=null and enabled !='' and enabled !='null' ">
+			<![CDATA[and enabled=#{enabled}]]>
+			</if>
+			<if test="managecom !=null and managecom !='' and managecom !='null' ">
+			<![CDATA[and managecom=#{managecom}]]>
+			</if>
+			<if test="saleCom !=null and saleCom !='' and saleCom !='null' ">
+			<![CDATA[and saleCom=#{saleCom}]]>
+			</if>
+			<if
+				test="createPeople !=null and createPeople !='' and createPeople !='null' ">
+			<![CDATA[and createPeople=#{createPeople}]]>
+			</if>
+			<if test="editPeople !=null and editPeople !='' and editPeople !='null' ">
+			<![CDATA[and editPeople=#{editPeople}]]>
+			</if>
+			<if test="birth !=null and birth !='' and birth !='null' ">
+			<![CDATA[and birth=#{birth}]]>
+			</if>
+			<if test="createTime !=null and createTime !='' and createTime !='null' ">
+			<![CDATA[and createTime=#{createTime}]]>
+			</if>
+			<if test="editTime !=null and editTime !='' and editTime !='null' ">
+			<![CDATA[and editTime=#{editTime}]]>
+			</if>
+		</where>
+	</sql>
+
+	<!-- 新增方法 -->
+	<insert id="insertIntoPersonUser" parameterType="domain.PersonUserBo">
+		INSERT INTO person_user
+		(userID,pwd,userName,sex,birth,education,phone,status,userLevle,enabled,managecom,saleCom,createTime,createPeople,editTime,editPeople)
+		VALUES (
+		#{userId},#{pwd},#{userName},#{sex},#{birth},#{education},#{phone},#{status},#{userLevle},#{enabled},#{managecom},#{saleCom},#{createTime},#{createPeople},#{editTime},#{editPeople}
+		)
+	</insert>
+	<!-- 由userId查询一条 -->
+	<select id="findById" parameterType="String" resultMap="BaseResultMap">
+		SELECT
+		userID,pwd,userName,sex,birth,education,phone,status,userLevle,enabled,managecom,saleCom,createTime,createPeople,editTime,editPeople
+		FROM
+		person_user
+		WHERE userID = #{userId}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		SELECT
+		userID,pwd,userName,sex,birth,education,phone,status,userLevle,enabled,managecom,saleCom,createTime,createPeople,editTime,editPeople
+		FROM
+		person_user
+	</select>
+
+	<select id="findDataCountsByCondation" parameterType="domain.PersonUserBo"
+		resultType="int">
+		SELECT count(1) FROM
+		person_user
+		<include refid="personUserCondition"/>
+	</select>
+
+	<select id="findPeopleUserListByCondation" parameterType="domain.PersonUserBo"
+		resultMap="BaseResultMap">
+		SELECT
+		userID,pwd,userName,sex,birth,education,phone,status,userLevle,enabled,managecom,saleCom,createTime,createPeople,editTime,editPeople
+		FROM
+		person_user
+		<include refid="personUserCondition"/>
+	</select>
+
+	<update id="updatePeoperUser" parameterType="domain.PersonUserBo">
+		update person_user 
+		<set>
+			<if test="pwd !=null and pwd !='' and pwd !='null' ">
+			<![CDATA[ pwd=#{pwd}, ]]>
+			</if>
+			<if test="userName !=null and userName !='' and userName !='null' ">
+			<![CDATA[ userName=#{userName},]]>
+			</if>
+			<if test="sex !=null and sex !='' and sex !='null' ">
+			<![CDATA[ sex=#{sex},]]>
+			</if>
+			<if test="education !=null and education !='' and education !='null' ">
+			<![CDATA[ education=#{education},]]>
+			</if>
+			<if test="phone !=null and phone !='' and phone !='null' ">
+			<![CDATA[ phone=#{phone},]]>
+			</if>
+			<if test="status !=null and status !='' and status !='null' ">
+			<![CDATA[ status=#{status},]]>
+			</if>
+			<if test="userLevle !=null and userLevle !='' and userLevle !='null' ">
+			<![CDATA[ userLevle=#{userLevle},]]>
+			</if>
+			<if test="enabled !=null and enabled !='' and enabled !='null' ">
+			<![CDATA[ enabled=#{enabled},]]>
+			</if>
+			<if test="managecom !=null and managecom !='' and managecom !='null' ">
+			<![CDATA[ managecom=#{managecom},]]>
+			</if>
+			<if test="saleCom !=null and saleCom !='' and saleCom !='null' ">
+			<![CDATA[ saleCom=#{saleCom},]]>
+			</if>
+			<if
+				test="createPeople !=null and createPeople !='' and createPeople !='null' ">
+			<![CDATA[ createPeople=#{createPeople},]]>
+			</if>
+			<if test="editPeople !=null and editPeople !='' and editPeople !='null' ">
+			<![CDATA[ editPeople=#{editPeople},]]>
+			</if>
+			<if test="birth !=null and birth !='' and birth !='null' ">
+			<![CDATA[ birth=#{birth},]]>
+			</if>
+			<if test="createTime !=null and createTime !='' and createTime !='null' ">
+			<![CDATA[ createTime=#{createTime},]]>
+			</if>
+			<if test="editTime !=null and editTime !='' and editTime !='null' ">
+			<![CDATA[ editTime=#{editTime},]]>
+			</if>
+		</set>
+		where
+		userID=#{userId}
+	</update>
+	
+	<delete id="deletePersonUser" parameterType="domain.PersonUserBo">
+		delete from person_user where userID=#{userId}
+	</delete>
+</mapper>

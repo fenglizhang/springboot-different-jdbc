@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    datasource: MYSQL
+    show-sql: true
+---
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zhanglfdatabase
+    username: root
+    password:
+    driverClassName: com.mysql.jdbc.Driver
